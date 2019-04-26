@@ -1,24 +1,31 @@
 <html>
 <head>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
-    
 <body>
    <div class="container">
       <div class="row">
-         <div class="col-md-12">
+         <div class="col-md-12 text-center">
             <h2>Current temperature</h2>
          </div>
       </div>
-      <div class="row">
+      <div class="row justify-content-md-center">
          <div class="col-md-6">
-            <a href='./' class="btn btn-primary">Refresh data</a>
+            <a href='./' class="btn btn-block btn-outline-success">Refresh data</a>
+         </div>
+      </div>
+      <div class="row justify-content-md-center">
+         <div class="col-md-8">
+            <img src="static/test.png" style="max-width: 100%">
          </div>
       </div>
       <div class="row">
          <div class="col-md-12">
-            <img src="static/test.png">
-         </div>
+	    <a href="static/pk_1.wav">Download wave file</a>
+	    <a href="static/data_temp.dat">Download datetime data</a>
+	 </div>
       </div>
    </div>
 </body>

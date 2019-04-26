@@ -1,11 +1,15 @@
 from flask import Flask, render_template
-import os
+from flask_caching import Cache
+import time
 from subprocess import check_output
 
 app = Flask(__name__)
+cache = Cache(app,config={'CACHE_TYPE': 'simple'})
 
 @app.route('/')
+@cache.cached(timeout=50)
 def hello():
+    time.sleep(10)
     check_output('./temperatures/rysowanie.sh')
     return render_template('main.html')
 

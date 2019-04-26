@@ -9,7 +9,7 @@ class Temperature(object):
     def get_temperature(self, unit='C', date=True):
         unit = self.sensor.DEGREES_C if unit == 'C' else self.sensor.DEGREES_F
         if date:
-            date_today = datetime.today().strftime('%H:%M')
+            date_today = datetime.today().strftime('%Y-%m-%dT%H:%M')
             return (date_today, self.sensor.get_temperature(unit=unit))
         return self.sensor.get_temperature(unit=unit)
 
