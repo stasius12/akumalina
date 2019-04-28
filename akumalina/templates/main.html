@@ -22,11 +22,25 @@
          </div>
       </div>
       <div class="row">
-         <div class="col-md-12">
+         <div class="col-md-12 text-center">
             <h2>Recording</h2>	 
-	 </div>
+	      </div>
       </div>
-      
+      <div class="row">
+         <div class="col-md-12 text-center">
+            <form class="form-row" method="POST" action='./'>
+               {{ form.csrf_token }}
+               {% for field in form %}{% if not field.id == 'csrf_token' %}
+                  <div class="col-md-2">
+                     {{ field }}
+                  </div>
+               {% endif %}{% endfor %}
+               <div class="col-md-2">
+                  <button class="btn btn-success btn-block" type="submit">Record</button>
+               </div>
+            </form>
+         </div>
+      </div> 
    </div>
 </body>
 </html>

@@ -1,25 +1,34 @@
 from flask import Flask, render_template
-#from flask_caching import Cache
 import os
 from datetime import datetime, timedelta
 from collections import defaultdict
-from subprocess import check_output
 
 from file_handling import FileHandler
 from plotting import Plotter
+from recording import Recorder
+from forms import RecordingParamsForm
+
+SECRET_KEY = os.urandom(32)
 
 app = Flask(__name__)
-#cache = Cache(app,config={'CACHE_TYPE': 'simple'})
+app.config['SECRET_KEY'] = SECRET_KEY
 
-@app.route('/')
+@app.route('/', methods=('GET', 'POST'))
 def hello():
+    # === temperatures ===
     data = FileHandler().read_temperatures_data()
     date_to = datetime.today() 
     date_from = date_to - timedelta(hours=1)
     data = list(filter(lambda el: el[0] > date_from and el[0] < date_to, data))
-    print(data)
-    a = Plotter(data).create_plot()
-    return render_template('main.html')
+    # a = Plotter(data).create_plot()
+
+    # === recording ===
+    form = RecordingParamsForm()
+    if form.validate_on_submit():
+        recorder = Recorder(5, 1)
+        recorder.record()
+    
+    return render_template('main.html', form=form)
 
 @app.route('/croatia')
 def croatia():
