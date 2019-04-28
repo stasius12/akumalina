@@ -1,1 +1,5 @@
 env
+akumalina/__pycache__/
+akumalina/static/croatia/
+akumalina/static/test.png
+.gitignore

@@ -1,0 +1,32 @@
+<html>
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12 text-center">
+            <h1>Croatia</h1>
+         </div>
+      </div>
+      {% for id, day in days.items() %}
+      <div class='row'>
+         <div class=col-md-12'>
+            <h1> {{ day.name }} </h1>
+	 </div>
+      </div>
+      <div class='row'>
+         {% for movie in day.movies %}
+	 <div class='col-md-4'>
+      	    <video width="320" height="240" controls>
+		    <source src="static/croatia/{{ movie }}" type="video/mp4">
+            </video>
+	 </div>
+	 {% endfor %}
+      </div>
+      {% endfor %}
+   </div>
+</body>
+</html>

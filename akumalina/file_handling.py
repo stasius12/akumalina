@@ -2,7 +2,7 @@ from datetime import datetime
 
 class FileHandler(object):
 	def read_temperatures_data(self):
-		data = []
+		data = {}
 
 		with open('temperatures/data_temp.dat', 'r') as file:
 			while True:
@@ -13,9 +13,6 @@ class FileHandler(object):
 				date, temp = line
 				date = datetime.strptime(date, '%Y-%m-%dT%H:%M')
 				temp = temp.strip('\n')
-				data.append({
-					'date': date,
-					'temp': temp,
-				})
-		return data
+				data[date] = temp
+		return sorted(data.items())
 		
