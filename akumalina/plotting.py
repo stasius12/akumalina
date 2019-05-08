@@ -6,7 +6,7 @@ import os
 class TemperaturePlotter:
     def __init__(self, data):
         self.data = data
-	
+    
     def create_plot(self):
         x_data = [x[0] for x in self.data]
         y_data = [x[1] for x in self.data]
@@ -26,7 +26,7 @@ class AudioPlotter:
             self.wave = wave / (np.iinfo(np.uint8).max + 1) - 0.5
             self.fs = fs
         return self.wave, self.fs if fs_ else self.wave    
-	
+    
     def create_plot(self):
         wave, fs = self.get_wave_file(True)
         x = np.arange(len(wave))/float(fs)
