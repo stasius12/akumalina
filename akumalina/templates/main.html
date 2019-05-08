@@ -6,6 +6,7 @@
 </head>
 <body>
    <div class="container">
+   {{ a }}
       <div class="row">
          <div class="col-md-12 text-center">
             <h2>Current temperature</h2>
@@ -24,7 +25,7 @@
       <div class="row">
          <div class="col-md-12 text-center">
             <h2>Recording</h2>	 
-	      </div>
+	</div>
       </div>
       <div class="row">
          <div class="col-md-12 text-center">
@@ -40,7 +41,21 @@
                </div>
             </form>
          </div>
-      </div> 
+      </div>
+      {% if wavefile %}
+      <div class="row">
+         <div class="col-md-12">
+            <audio controls>
+               <source src='{{ wavefile }}' type='audio/wav'>
+            </audio>
+         </div>
+      </div>
+      {% endif %}
+      <div class="row justify-content-md-center">
+         <div class="col-md-8">
+            <img src="static/audioplot.png" style="max-width: 100%">
+         </div>
+      </div>
    </div>
 </body>
 </html>
