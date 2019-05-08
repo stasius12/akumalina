@@ -9,12 +9,10 @@ class Recorder:
         self.channel = channel
 
     def record(self):
-        os.system('arecord -c %s -t wav -d %s -r 44100 > akumalina/static/%s' % (
-            self.channel, self.duration, self.get_unique_filename()
+        os.system('arecord -c %s -t wav -d %s -r 44100 > akumalina/%s' % (
+            self.channel, self.duration, WaveFile.get_default_wave_file_path(self.get_unique_filename())
         ))
-        wave_file = WaveFile(wave_file_path='static/%s' % self.get_unique_filename())
-        db.session.add(wave_file)
-        db.session.commit()
+        wave_file = WaveFile.create(wave_file_name=self.get_unique_filename())
         return wave_file
     
     def get_unique_filename(self):

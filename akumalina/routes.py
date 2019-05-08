@@ -21,17 +21,17 @@ def hello():
     # a = Plotter(data).create_plot()
 
     # === recording ===
-    form = RecordingParamsForm(request.form or None)
     wavefile = WaveFile.query.order_by(WaveFile.created_at.desc()).first()
+    form = RecordingParamsForm(request.form or None)
     if form.validate_on_submit():
         recorder = Recorder(form.duration.data, form.channel_number.data)
         wavefile = recorder.record()
-        audio_plotter = AudioPlotter('akumalina/%s' % wavefile.wave_file_path)
+        audio_plotter = AudioPlotter(wavefile.wave_file_path)
         audio_plotter.create_plot()
         
     vars = {
         'form': form,
-        'wavefile': wavefile.wave_file_path,
+        'wavefile': wavefile,
     }    
     
     return render_template('main.html', **vars)

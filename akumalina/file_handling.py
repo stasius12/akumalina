@@ -14,7 +14,7 @@ class FileHandler(object):
                 try:
                     date = datetime.strptime(date, '%Y-%m-%dT%H:%M')
                 except ValueError:
-                                    pass
+                    pass
                 temp = temp.strip('\n')
                 data[date] = temp
         return sorted(data.items())
