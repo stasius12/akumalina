@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 
 from .file_handling import FileHandler
-from .plotting import AudioPlotter
+from .plotting import AudioPlotter, TemperaturePlotter
 from .recording import Recorder
 from .forms import RecordingParamsForm
 from .models import WaveFile
@@ -16,9 +16,9 @@ def hello():
     # === temperatures ===
     data = FileHandler().read_temperatures_data()
     date_to = datetime.today() 
-    date_from = date_to - timedelta(hours=1)
+    date_from = date_to - timedelta(days=7)
     data = list(filter(lambda el: el[0] > date_from and el[0] < date_to, data))
-    # a = Plotter(data).create_plot()
+    a = TemperaturePlotter(data).create_plot()
 
     # === recording ===
     wavefile = WaveFile.query.order_by(WaveFile.created_at.desc()).first()
@@ -26,7 +26,7 @@ def hello():
     if form.validate_on_submit():
         recorder = Recorder(form.duration.data, form.channel_number.data)
         wavefile = recorder.record()
-        audio_plotter = AudioPlotter(wavefile.wave_file_path)
+        audio_plotter = AudioPlotter(wavefile)
         audio_plotter.create_plot()
         
     vars = {
@@ -39,7 +39,7 @@ def hello():
 @app.route('/croatia')
 def croatia():
     days = dict()
-    movies = [x for x in os.listdir('static/croatia/') if x.endswith('.mp4') and x.startswith('day')]
+    movies = [x for x in os.listdir('akumalina/static/croatia/') if x.endswith('.mp4') and x.startswith('day')]
     for movie in movies:
         day = 'day_%s' % movie.split('_')[1]
         if not day in days:

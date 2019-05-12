@@ -1,34 +1,51 @@
 <html>
 <head>
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <link rel="stylesheet" href="{{ url_for('bower.static', filename='bootstrap/dist/css/bootstrap.min.css') }}" />
+   <link rel="stylesheet" href="{{ url_for('bower.static', filename='eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}" />
    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
    <div class="container">
-   {{ a }}
       <div class="row">
          <div class="col-md-12 text-center">
             <h2>Current temperature</h2>
          </div>
       </div>
-      <div class="row justify-content-md-center">
-         <div class="col-md-6">
-            <a href='./' class="btn btn-block btn-outline-success">Refresh data</a>
+      <div class="row">
+         <div class="col-md-6 col-md-offset-3">
+            <a href='./' class="btn btn-block btn-success">Refresh data</a>
          </div>
       </div>
-      <div class="row justify-content-md-center">
-         <div class="col-md-8">
-            <img src="static/test.png" style="max-width: 100%">
+      <div class="btn-group" role="group" aria-label="Basic example">
+         <button type="button" class="btn btn-default">Left</button>
+         <button type="button" class="btn btn-default">Middle</button>
+         <button type="button" class="btn btn-default">Right</button>
+      </div>
+      <div class="row">
+         <div class='col-sm-6'>
+            <div class="form-group">
+               <div class='input-group date' id='datetimepicker1'>
+                  <input type='text' class="form-control" />
+                  <span class="input-group-addon">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-8 col-md-offset-2">
+            <img src="static/test.png" style="width: 100%">
          </div>
       </div>
       <div class="row">
          <div class="col-md-12 text-center">
             <h2>Recording</h2>	 
-	</div>
+	    </div>
       </div>
       <div class="row">
-         <div class="col-md-12 text-center">
+         <div class="col-md-12">
             <form class="form-row" method="POST" action='./'>
                {{ form.csrf_token }}
                {% for field in form %}{% if not field.id == 'csrf_token' %}
@@ -46,16 +63,25 @@
       <div class="row">
          <div class="col-md-12">
             <audio controls>
-               <source src='{{ wavefile }}' type='audio/wav'>
+               <source src='{{ wavefile.wave_file_path }}' type='audio/wav'>
             </audio>
          </div>
       </div>
       {% endif %}
-      <div class="row justify-content-md-center">
-         <div class="col-md-8">
-            <img src="static/audioplot.png" style="max-width: 100%">
+      <div class="row">
+         <div class="col-md-8 col-md-offset-2">
+            <img src='{{ wavefile.time_plot_path }}' style="width: 100%">
          </div>
       </div>
    </div>
+   <script type="text/javascript" src="{{ url_for('bower.static', filename='jquery/dist/jquery.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('bower.static', filename='moment/min/moment.min.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('bower.static', filename='bootstrap/dist/js/bootstrap.min.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('bower.static', filename='eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+   <script type="text/javascript">
+      $(function () {
+         $('#datetimepicker1').datetimepicker();
+      });
+   </script>
 </body>
 </html>

@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import scipy.io.wavfile
 import numpy as np
 import os
+import uuid
 
 from .models import WaveFile
 
@@ -12,9 +14,17 @@ class TemperaturePlotter:
     def create_plot(self):
         x_data = [x[0] for x in self.data]
         y_data = [x[1] for x in self.data]
-        plt.plot(x_data, y_data)
-        plt.gcf().autofmt_xdate()
-        plt.savefig('static/test.png')
+        fig, ax = plt.subplots()
+        ax.plot(x_data, y_data)
+        auto_loc = mdates.AutoDateLocator()
+        fmt = mdates.AutoDateFormatter(auto_loc)
+        ax.xaxis.set_major_locator(auto_loc)
+        ax.xaxis.set_major_formatter(fmt)
+        fig.autofmt_xdate()
+        ax.grid(True)
+        ax.set_xlabel('Date')
+        ax.set_ylabel('Temperature [$^\circ$C]')
+        plt.savefig('akumalina/static/test.png')
 
 
 class AudioPlotter:

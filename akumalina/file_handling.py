@@ -16,6 +16,6 @@ class FileHandler(object):
                 except ValueError:
                     pass
                 temp = temp.strip('\n')
-                data[date] = temp
+                data[date] = float(temp)
         return sorted(data.items())
         
