@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block extra_js %}
+<script type="text/javascript">
+   $(function () {
+      $('#datetimepicker1').datetimepicker();
+      $('#datetimepicker2').datetimepicker();
+   });
+</script>
+{% endblock %}
+{% block body %}
+<div class="container">
+   <div class="row">
+      <div class="col-md-12 text-center">
+         <h2>Recording</h2>	 
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-12">
+         <form class="form-row" method="POST" action='./'>
+            {{ form.csrf_token }}
+            {% for field in form %}{% if not field.id == 'csrf_token' %}
+               <div class="col-md-2">
+                  {{ field }}
+               </div>
+            {% endif %}{% endfor %}
+            <div class="col-md-2">
+               <button class="btn btn-success btn-block" type="submit">Record</button>
+            </div>
+         </form>
+      </div>
+   </div>
+   {% if wavefile %}
+   <div class="row">
+      <div class="col-md-12">
+         <audio controls>
+            <source src='{{ wavefile.wave_file_path }}' type='audio/wav'>
+         </audio>
+      </div>
+   </div>
+   {% endif %}
+   <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+         <img src='{{ wavefile.time_plot_path }}' style="width: 100%">
+      </div>
+   </div>
+</div>  
+{% endblock %}
