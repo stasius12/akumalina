@@ -7,19 +7,30 @@ from collections import defaultdict
 from .file_handling import FileHandler
 from .plotting import AudioPlotter, TemperaturePlotter
 from .recording import Recorder
-from .forms import RecordingParamsForm
+from .forms import RecordingParamsForm, TemperaturePlotDateForm
 from .models import WaveFile
 
 
-@app.route('/', methods=['GET', 'POST'])
-def hello():
+@app.route('/temperatures/', methods=['GET', 'POST'])
+def temperatures():
     # === temperatures ===
+    form = TemperaturePlotDateForm(request.form or None)
+    if form.validate_on_submit():
+        date_from = form.date_from.data
+        
     data = FileHandler().read_temperatures_data()
     date_to = datetime.today() 
     date_from = date_to - timedelta(days=7)
     data = list(filter(lambda el: el[0] > date_from and el[0] < date_to, data))
     a = TemperaturePlotter(data).create_plot()
+    
+    vars = {
+        'form': form,
+    }
+    return render_template('temperatures.html', **vars)
 
+@route('/recording/', methods=['GET', 'POST'])
+def recording_view():
     # === recording ===
     wavefile = WaveFile.query.order_by(WaveFile.created_at.desc()).first()
     form = RecordingParamsForm(request.form or None)

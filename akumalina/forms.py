@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField
+from wtforms import StringField, IntegerField, DateTimeField
 
 class RecordingParamsForm(FlaskForm):
 	duration = IntegerField('Duration', render_kw={
@@ -10,3 +10,10 @@ class RecordingParamsForm(FlaskForm):
 		'placeholder': 'Channel number',
 		'class': 'form-control'
 	})
+
+class TemperaturePlotDateForm(FlaskForm):
+    date_from = DateTimeField('Date from', render_kw={
+        'placeholder': 'Date from',
+        'class': 'form-control'
+    })
+
